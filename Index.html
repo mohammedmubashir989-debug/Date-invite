@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Go on a Date With Me?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: radial-gradient(circle, #fff1f5 0%, #fde2e4 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 30px 24px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 10px 30px rgba(229, 115, 115, 0.15);
+      text-align: center;
+      position: relative;
+    }
+    .step {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    .step.active {
+      display: flex;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .img-box {
+      font-size: 65px;
+      margin-bottom: 15px;
+    }
+    h2 {
+      color: #6a1b29;
+      font-size: 1.45rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    p {
+      color: #7d6b6d;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background-color: #d81b60;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+      transition: 0.2s;
+      width: 100%;
+      max-width: 220px;
+      margin-top: 8px;
+    }
+    .btn:active {
+      transform: scale(0.96);
+    }
+    .btn-no {
+      background-color: #f3e5f5;
+      color: #8e24aa;
+      box-shadow: none;
+      position: relative;
+      user-select: none;
+    }
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .input-box {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #6a1b29;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #ffcdd2;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      background: #fffafa;
+    }
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .food-card {
+      border: 1.5px solid #ffebee;
+      background: #fafafa;
+      padding: 12px 6px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .food-card span {
+      font-size: 24px;
+    }
+    .food-card.selected {
+      border-color: #d81b60;
+      background-color: #fce4ec;
+      font-weight: bold;
+    }
+    .fee-box {
+      background: #fdf6f0;
+      border: 1.5px dashed #f8bbd0;
+      padding: 14px;
+      border-radius: 14px;
+      width: 100%;
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Step 1: Proposal -->
+    <div class="step active" id="step1">
+      <div class="img-box">🐶🌸</div>
+      <h2>🌸 Will you go on a date with me? 🌸</h2>
+      <div class="btn-group">
+        <button class="btn" onclick="nextStep(2)">YES ♥</button>
+        <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">no x</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Confirmation -->
+    <div class="step" id="step2">
+      <div class="img-box">🧈✨</div>
+      <h2>WAIT YOU ACTUALLY SAID YES??</h2>
+      <p>I was so ready for you to say no 🥹</p>
+      <button class="btn" onclick="nextStep(3)">okay okay! →</button>
+    </div>
+
+    <!-- Step 3: Date & Time -->
+    <div class="step" id="step3">
+      <div class="img-box">📅🐾</div>
+      <h2>So... when are you free?</h2>
+      <div class="input-box">
+        <label>Pick a Day 🗓️</label>
+        <input type="date" id="dateInput">
+      </div>
+      <div class="input-box">
+        <label>What Time? ⏰</label>
+        <select id="timeInput">
+          <option value="12:00 PM">12:00 PM</option>
+          <option value="01:30 PM">01:30 PM</option>
+          <option value="04:30 PM">04:30 PM</option>
+          <option value="07:00 PM">07:00 PM</option>
+        </select>
+      </div>
+      <button class="btn" onclick="nextStep(4)">set the date! ♥</button>
+    </div>
+
+    <!-- Step 4: Food Vibes -->
+    <div class="step" id="step4">
+      <h2>What are we feeling? 🍽️✨</h2>
+      <p>pick your vibe</p>
+      <div class="food-grid">
+        <div class="food-card" onclick="selectFood(this)"><span>🍕</span>Pizza</div>
+        <div class="food-card" onclick="selectFood(this)"><span>🍣</span>Sushi</div>
+        <div class="food-card" onclick="selectFood(this)"><span>🍔</span>Burgers</div>
+        <div class="food-card" onclick="selectFood(this)"><span>🍝</span>Pasta</div>
+        <div class="food-card" onclick="selectFood(this)"><span>🌮</span>Tacos</div>
+        <div class="food-card" onclick="selectFood(this)"><span>🍜</span>Ramen</div>
+      </div>
+      <button class="btn" onclick="nextStep(5)">next →</button>
+    </div>
+
+    <!-- Step 5: Almost Ready -->
+    <div class="step" id="step5">
+      <h2>glad you didn't say no.</h2>
+      <p>Be ready on time, I'm coming to get you 🚗💨</p>
+      <p style="font-size: 0.8rem; color: #888;">P.S. normal people text, but I made a website for you.</p>
+      <button class="btn" onclick="nextStep(6)">ok I accept 👑</button>
+    </div>
+
+    <!-- Step 6: Joke / Fee -->
+    <div class="step" id="step6">
+      <div class="img-box">💳</div>
+      <h2>one small fee</h2>
+      <p>to confirm your acceptance of this date, please complete the transaction.</p>
+      <div class="fee-box">
+        <strong style="color: #6a1b29;">Date Agreement™</strong>
+        <div style="font-size: 1.5rem; color: #d81b60; font-weight: bold; margin-top: 4px;">$499</div>
+        <small style="color: #777;">one-time fee • non-refundable • absolutely worth it</small>
+      </div>
+      <button class="btn" onclick="alert('Yay! Looking forward to our date! ❤️')">pay $499 & confirm 🫶</button>
+    </div>
+  </div>
+
+  <script>
+    function nextStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById('step' + stepNumber).classList.add('active');
+    }
+
+    function moveButton() {
+      const btn = document.getElementById('noBtn');
+      const x = Math.random() * 160 - 80;
+      const y = Math.random() * 160 - 80;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function selectFood(el) {
+      document.querySelectorAll('.food-card').forEach(card => card.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+</body>
+</html>
